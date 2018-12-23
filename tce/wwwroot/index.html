@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>TCE - Vaga Desenvolvedor Dot.Net - CRUD Livros</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h2>CRUD de Livros</h2>
+        <form class="form-horizontal row" action="javascript:void(0);">
+            <input type="hidden" id="id" name="id">
+            <div class="form-group col-sm-12">
+                <label for="name">Nome:</label>
+                <input type="text" class="form-control" placeholder="Informe o nome do livro" id="name" name="name">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="isbn">ISBN:</label>
+                <input type="number" class="form-control" placeholder="Informe o ISBN" id="isbn" name="isbn">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="price">Preço:</label>
+                <input type="number" class="form-control" placeholder="Informe o preço (R$)" id="price" name="price">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="published">Publicação:</label>
+                <input type="date" class="form-control" placeholder="Informe a data de publicação" id="published" name="published">
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="avatar">URL do Avatar:</label>
+                <input type="url" class="form-control" placeholder="Informe a URL da capa do livro" id="avatar" name="avatar">
+            </div>
+
+            <div class="form-group col-sm-12">
+                <button type="button" class="btn btn-default" onclick="search()" title="Filtre a listagem por qualquer atributo.">Pesquisar</button>
+                <button type="button" class="btn btn-default" onclick="clearItem(false)" title="Limpar campos do formulário">Limpar</button>
+                <button type="button" class="btn btn-default" onclick="clearItem()" title="Novo item">Novo</button>
+                <button type="button" class="btn btn-default" onclick="saveItem()" title="Salvar dados">Salvar</button>
+            </div>
+
+        </form>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Publicação</th>
+                    <th>Avatar</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="livros"></tbody>
+        </table>
+
+        <p id="counter"></p>
+    </div>
+    
+    <script src="site.js"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 ﻿const uri = "api/book";
-let todos = null;
+let livros = null;
 function getCount(data) {
     const el = $("#counter");
     let name = "livro";
@@ -17,10 +17,34 @@ $(document).ready(function () {
     getData();
 });
 
+var sortDirections = {
+    ISBN: true,
+    Name: true,
+    Price: true,
+    Published: true,
+};
+var sortField = "Name";
+var sortDirection = true;
+function sortBy(field) {
+    console.log("sorting...", field);
+    if (sortDirections[field]) {
+        sortField = field;
+        sortDirections[field] = !sortDirections[field];
+        sortDirection = sortDirections[field];
+        console.log("getingData");
+        getData();
+    }
+}
+
 function getData() {
+    let _ISBN = $("#isbn").val();
+    let _Name = $("#name").val();
+    let _Price = $("#price").val();
+    let _Published = $("#published").val();
+
     $.ajax({
         type: "GET",
-        url: uri,
+        url: uri + "?sortField=" + sortField + "&sortDirection=" + (sortDirection ? "asc" : "desc") + "&ISBN=" + _ISBN + "&Name=" + _Name + "&Price=" + _Price + "&Published=" + _Published,
         cache: false,
         success: function (data) {
             const tBody = $("#livros");
@@ -33,6 +57,7 @@ function getData() {
                 let _published = item.published;
                 if (_published) {
                     _published = (new Date(_published)).toLocaleDateString("pt-BR");
+                    item.published = item.published.toString().substr(0, 10);
                 }
                 const tr = $("<tr></tr>")
                     .append($("<td></td>").text(item.isbn))
@@ -58,7 +83,7 @@ function getData() {
                 tr.appendTo(tBody);
             });
 
-            todos = data;
+            livros = data;
         }
     });
 }

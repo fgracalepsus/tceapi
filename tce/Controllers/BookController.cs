@@ -34,12 +34,99 @@ namespace TceApi.Controllers
             
         }
 
+        private bool existsByISBN(Book book)
+        {
+            return _context.Books
+                        .Where(b => b.ISBN == book.ISBN)
+                        .Where(b => b.Id != book.Id)
+                        .Any();
+        }
 
+        /*
         // GET: api/Book
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks()
         {
-            return await _context.Books.ToListAsync();   
+            return await _context.Books.ToListAsync();
+        }
+        */
+
+        // GET: api/Book/sortField/sortDirection/ISBN/Name/Price/Published
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<Book>>> GetBooks(string sortField, string sortDirection, string ISBN, string Name, string Price, string Published)
+        {
+            // return await _context.Books.ToListAsync();
+
+            IQueryable<Book> bookIQ = from s in _context.Books
+                                      select s;
+
+            // Order
+            var _sortField = String.IsNullOrEmpty(sortField) ? "name" : sortField;
+            var _sortDirection = String.IsNullOrEmpty(sortDirection) ? "asc" : sortDirection;
+
+            if(_sortField == "ISBN")
+            {
+                if(_sortDirection == "desc")
+                {
+                    bookIQ = bookIQ.OrderByDescending(s => s.ISBN);
+                }
+                else
+                {
+                    bookIQ = bookIQ.OrderBy(s => s.ISBN);
+                }
+            }else if (_sortField == "Price")
+            {
+                if (_sortDirection == "desc")
+                {
+                    bookIQ = bookIQ.OrderByDescending(s => s.Price);
+                }
+                else
+                {
+                    bookIQ = bookIQ.OrderBy(s => s.Price);
+                }
+            }
+            else if(_sortField == "Published")
+            {
+                if (_sortDirection == "desc")
+                {
+                    bookIQ = bookIQ.OrderByDescending(s => s.Published);
+                }
+                else
+                {
+                    bookIQ = bookIQ.OrderBy(s => s.Published);
+                }
+            }
+            else
+            {
+                if (_sortDirection == "desc")
+                {
+                    bookIQ = bookIQ.OrderByDescending(s => s.Name);
+                }
+                else
+                {
+                    bookIQ = bookIQ.OrderBy(s => s.Name);
+                }
+            }
+
+            // Where
+            if (!String.IsNullOrEmpty(ISBN))
+            {
+                bookIQ = bookIQ.Where(s => s.ISBN == ISBN);
+            }
+            if (!String.IsNullOrEmpty(Name))
+            {
+                bookIQ = bookIQ.Where(s => s.Name.Contains(Name));
+            }
+            if (!String.IsNullOrEmpty(Price))
+            {
+                bookIQ = bookIQ.Where(s => s.Price == Convert.ToDouble(Price));
+            }
+            if (!String.IsNullOrEmpty(Published))
+            {
+                bookIQ = bookIQ.Where(s => s.Published == Convert.ToDateTime(Published));
+            }
+
+            return await bookIQ.AsNoTracking().ToListAsync();
         }
 
         // GET: api/Book/id
@@ -60,6 +147,10 @@ namespace TceApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Book>> PostBook(Book book)
         {
+            if (existsByISBN(book))
+            {
+                return BadRequest();
+            }
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
 
@@ -71,6 +162,10 @@ namespace TceApi.Controllers
         public async Task<IActionResult> PutBook(long id, Book book)
         {
             if (id != book.Id)
+            {
+                return BadRequest();
+            }
+            if (existsByISBN(book))
             {
                 return BadRequest();
             }

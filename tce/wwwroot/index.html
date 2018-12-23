@@ -37,7 +37,7 @@
             </div>
 
             <div class="form-group col-sm-12">
-                <button type="button" class="btn btn-default" onclick="search()" title="Filtre a listagem por qualquer atributo.">Pesquisar</button>
+                <button type="button" class="btn btn-default" onclick="getData()" title="Filtre a listagem por qualquer atributo.">Pesquisar</button>
                 <button type="button" class="btn btn-default" onclick="clearItem(false)" title="Limpar campos do formulário">Limpar</button>
                 <button type="button" class="btn btn-default" onclick="clearItem()" title="Novo item">Novo</button>
                 <button type="button" class="btn btn-default" onclick="saveItem()" title="Salvar dados">Salvar</button>
@@ -48,10 +48,10 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>ISBN</th>
-                    <th>Nome</th>
-                    <th>Preço</th>
-                    <th>Publicação</th>
+                    <th><a href="#" onclick="sortBy('ISBN')">ISBN</a></th>
+                    <th><a href="#" onclick="sortBy('Name')">Nome</a></th>
+                    <th><a href="#" onclick="sortBy('Price')">Preço</a></th>
+                    <th><a href="#" onclick="sortBy('Published')">Publicação</a></th>
                     <th>Avatar</th>
                     <th></th>
                     <th></th>

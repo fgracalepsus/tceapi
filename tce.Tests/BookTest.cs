@@ -39,6 +39,7 @@ namespace tce.Tests
             var controller = new BookController(test);
 
             var result = controller.GetBooks("", "", "456", "", "", "") as List<Book>;
+            Assert.IsNotNull(result);
             Assert.AreEqual(result.Count, 1);
         }
 
@@ -49,7 +50,7 @@ namespace tce.Tests
             var controller = new BookController(test);
 
             var result = controller.GetBooks("", "", "4560", "", "", "") as List<Book>;
-            Assert.AreEqual(result.Count, 1);
+            Assert.IsNull(result);
         }
 
         [TestMethod]
@@ -59,7 +60,8 @@ namespace tce.Tests
             var controller = new BookController(test);
 
             var result = controller.GetBooks("ISBN", "desc", "", "", "", "") as List<Book>;
-            Assert.AreEqual(test.Count, result.Count);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(test[3].ISBN, result.Content[0].ISBN);
         }
 
         [TestMethod]
@@ -69,6 +71,7 @@ namespace tce.Tests
             var controller = new BookController(test);
 
             var result = controller.GetBook(1) as List<Book>;
+            Assert.IsNotNull(result);
             Assert.AreEqual(result.Count, 1);
         }
 
@@ -79,7 +82,9 @@ namespace tce.Tests
             var controller = new BookController(test);
 
             var result = controller.PostBook(new Book(ISBN = "9999", Name = "Teste New", Price = 999.99, Published = new DateTime(2009,10,09))) as List<Book>;
+            Assert.IsNotNull(result);
             Assert.AreEqual(result.Count, 1);
+            Assert.AreEqual(result.Content.ISBN, "9999");
         }
 
         [TestMethod]
@@ -119,6 +124,7 @@ namespace tce.Tests
             var controller = new BookController(test);
 
             var result = controller.DeleteBook(3) as List<Book>;
+            Assert.IsNotNull(result);
             Assert.AreEqual(result.Id, 3);
         }
     }

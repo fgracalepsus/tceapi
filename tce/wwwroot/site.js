@@ -26,12 +26,12 @@ var sortDirections = {
 var sortField = "Name";
 var sortDirection = true;
 function sortBy(field) {
-    console.log("sorting...", field);
+    //console.log("sorting...", field);
     if (sortDirections[field]) {
         sortField = field;
         sortDirections[field] = !sortDirections[field];
         sortDirection = sortDirections[field];
-        console.log("getingData");
+        //console.log("getingData");
         getData();
     }
 }
@@ -113,7 +113,7 @@ function nullify(val) {
 }
 
 function saveItem() {
-    console.log("saving...")
+    //console.log("saving...")
     let item = {
         isbn: nullify($("#isbn").val()),
         name: nullify($("#name").val()),
@@ -127,7 +127,7 @@ function saveItem() {
         item.id = _id;
     }
     
-    console.log(item);
+    //console.log(item);
 
     $.ajax({
         type: (_id ? "PUT" : "POST"),
@@ -142,10 +142,10 @@ function saveItem() {
             console.log(errorThrown);
         },
         success: function (result) {
-            console.log("Item salvo");
-            console.log(result);
-            getData();
+            //console.log("Item salvo");
+            //console.log(result);
             clearItem(true);
+            getData();
         }
     });
 }

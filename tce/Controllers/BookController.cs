@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TceApi.Models;
+using tce.Models;
 
-namespace TceApi.Controllers
+namespace tce.Controllers
 {
     [Route("api/book")]
     [ApiController]

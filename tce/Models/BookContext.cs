@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TceApi.Models
+namespace tce.Models
 {
     public class BookContext : DbContext
     {
